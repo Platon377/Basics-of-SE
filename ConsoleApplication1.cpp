@@ -19,13 +19,13 @@ double enterVerifyValue(string f) {
     while (true) {
         string k;
 
-        cout << "Enter value of " + f << endl;
+        
         string warning;
         if (f == "a") warning = "It should be double";
         else if (f == "b") warning = "It should be double and bigger than or equal to a (>=a)";
         else if (f == "h") warning = "It should be double and bigger than 0 (>0)";
         else if (f == "n") warning = "It should be int and bigger than 7 (>7)";
-        //cout << warning << endl;
+        cout << "Enter value of " + f + ". " << warning << endl;
         
 
         cin >> k;
