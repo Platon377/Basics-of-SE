@@ -7,7 +7,7 @@ using namespace std;
 int n;
 double a, b, h;
 
-void importantText() {
+void instructionsText() {
     cout << "While inputing the values you should keep the following features in mind, otherwise, the wrong output pressumably will be calculated" << endl;
     cout << "1. \t If you enter some values, the program will try to convert them, so that they match appropriate standart" << endl;
     cout << "2. \t If you enter some letters, all digits after them will be ingored" << endl;
@@ -87,7 +87,8 @@ void findValue(double x, int n) {
 
 int main()
 {
-    importantText();
+
+    instructionsText();
     a = enterVerifyValue("a");
     b = enterVerifyValue("b");
     h = enterVerifyValue("h");
