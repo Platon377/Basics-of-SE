@@ -15,6 +15,7 @@ void instructionsText() {
     cout << "3. \t If you enter some leading zeroes, they will be ignored and only meaning digits will be saved" << endl;
     cout << "----------------------------------" << "\n" << endl;
 }
+
 //this functions inputs and checks, whether input is valid
 double enterVerifyValue(string f) {
     while (true) {
@@ -35,20 +36,22 @@ double enterVerifyValue(string f) {
         try {
             v = stod(k);
 
-            if (f == "b" && v < a) cout << "The value of " + f + " shoud be biger than or equal to a (>=a)" << endl;
-            else if (f == "h" && v <= 0) cout << "The value of " + f + " shoud be biger than 0 (>0)" << endl;
-            else if (f == "n" && (v <= 7 || v!=int(v))) cout << "The value of " + f + " shoud be biger than 7 (>7)" << endl;
+            if (f == "b" && v < a) throw string("The value of " + f + " shoud be biger than or equal to a (>=a) \n");
+            else if (f == "h" && v <= 0) throw string("The value of " + f + " shoud be biger than 0 (>0) \n");
+            else if (f == "n" && (v <= 7 || v!=int(v))) throw string("The value of " + f + " shoud be biger than 7 (>7) \n");
             else {
                 cout << setprecision(15) << "In the calculations for " + f + " will be used value " << v << endl;
                 cout << "----------------------------------" << "\n" << endl;
                 return v;
-                break;
+                //break;
             }
             
 
-        }        
+        }       
+        catch (string ex) { cout << ex << endl; }
         catch (const invalid_argument& e) { cout << "Enter something that contains leading digits" << endl; }
         catch (const out_of_range& e) {cout << "This value is approxiamting the smallest possible double, enter another number." << endl; }
+        catch (...) { cout << "Undefined error" << endl; }
         cout << "----------------------------------" << "\n" << endl;
 
         
