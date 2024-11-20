@@ -16,22 +16,14 @@ void instructionsText() {
     cout << "----------------------------------" << "\n" << endl;
 }
 
-//this functions inputs and checks, whether input is valid
-double enterVerifyValue(string f) {
-    while (true) {
-        string k;
+//this functions checks, whether input is valid
+bool verifyValue(string k, string f) {
 
-        
-        string warning;
-        if (f == "a") warning = "It should be double";
-        else if (f == "b") warning = "It should be double and bigger than or equal to a (>=a)";
-        else if (f == "h") warning = "It should be double and bigger than 0 (>0)";
-        else if (f == "n") warning = "It should be int and bigger than 7 (>7)";
-        cout << "Enter value of " + f + ". " << warning << endl;
-        
-
-        cin >> k;
         double v;
+
+        if (k == "") {
+            return false;
+        }
 
         try {
             v = stod(k);
@@ -40,27 +32,50 @@ double enterVerifyValue(string f) {
             else if (f == "h" && v <= 0) throw string("The value of " + f + " shoud be biger than 0 (>0) \n");
             else if (f == "n" && (v <= 7 || v!=int(v))) throw string("The value of " + f + " shoud be biger than 7 (>7) \n");
             else {
-                cout << setprecision(15) << "In the calculations for " + f + " will be used value " << v << endl;
+                cout << setprecision(15) << "In the calculations for " + f + " will be used value " << v << "\n" << endl;
                 cout << "----------------------------------" << "\n" << endl;
-                return v;
-                //break;
+                return true;
             }
             
 
         }       
         catch (string ex) { cout << ex << endl; }
-        catch (const invalid_argument& e) { cout << "Enter something that contains leading digits" << endl; }
-        catch (const out_of_range& e) {cout << "This value is approxiamting the smallest possible double, enter another number." << endl; }
-        catch (...) { cout << "Undefined error" << endl; }
+        catch (const invalid_argument& e) { cout << "Enter something that contains leading digits \n" << endl; }
+        catch (const out_of_range& e) {cout << "This value is approxiamting the smallest possible double, enter another number. \n" << endl; }
+        catch (...) { cout << "Undefined error\n" << endl; }
         cout << "----------------------------------" << "\n" << endl;
+        return false;
+}
+//this function inputs values
+double readValue(string f) {
+
+    string k="";
+    //cin >> k;
+
+    string warning;
+
+    while (verifyValue(k, f) != true) {
 
         
+        if (f == "a") warning = "It should be double";
+        else if (f == "b") warning = "It should be double and bigger than or equal to a (>=a)";
+        else if (f == "h") warning = "It should be double and bigger than 0 (>0)";
+        else if (f == "n") warning = "It should be int and bigger than 7 (>7)";
+        cout << "Enter value of " + f + ". " << warning << endl;
+
+        string t;
+        cin >> t;
+        k = t;
+
     }
+
+    double v = stod(k);
+    return v;
+
 }
 
-
 //this functions calculates the value of the current x
-void findValue(double x, int n) {
+double findValue(double x, int n) {
 
     double y = 0;
 
@@ -74,18 +89,19 @@ void findValue(double x, int n) {
         y = 5 * x - 2 - y;
     }
     else {
-        double s = 1, p = 1;
+        double s = 0, p = 1;
         for (int j = 0; j <= n + 4; j++) {
             p *= (4 * x - j);
         }
 
         for (int j = -4; j <= n + 2; j++) {
-            s += 1.0 / (x - 2 * j);
+            s += 1.0 / x - 2 * j;
         }
 
         y += p + x * s;
     }
-    cout << setw(10) << setfill(' ') << "x = " << x << "; \t y = " << y << ";" << endl;
+    return y;
+    
 
 }
 
@@ -93,14 +109,15 @@ int main()
 {
 
     instructionsText();
-    a = enterVerifyValue("a");
-    b = enterVerifyValue("b");
-    h = enterVerifyValue("h");
-    n = enterVerifyValue("n");
+    a = readValue("a");
+    b = readValue("b");
+    h = readValue("h");
+    n = readValue("n");
 
 
     for (double x = a; x <= b; x += h) {
-        findValue(x, n);
+        cout << setw(10) << setfill(' ') << "x = " << x << "; \t y = " << findValue(x, n) << ";" << endl;
+        
     }
     
     return 0;
